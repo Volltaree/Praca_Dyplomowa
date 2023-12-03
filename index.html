@@ -7,11 +7,57 @@
 </head>
 
 <body>
+    <h1 class="headerText">Asystent Dietetyczny</h1>
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="https://i.ibb.co/BcT07z2/kisspng-meal-dinner-breakfast-clip-art-pink-spoons-cliparts-5ab1d314966042-751293671521603348616.png" style="width:40%">
+        </div>
 
-    <header>
-        <div class="overlay">Asystent Dietetyczny</div>
-        <img src="https://th.bing.com/th/id/OIP.tRLgUG6GLj7I3SE86ldCTQHaHa?rs=1&pid=ImgDetMain" alt="Nagłówek">
-    </header>
+        <div class="mySlides fade">
+            <img src="https://i.ibb.co/yYnh8Pj/logo33.png" style="width:40%">
+        </div>
+
+        <div class="mySlides fade">
+            <img src="https://i.ibb.co/CmSbXnH/logo44.png" style="width:40%">
+        </div>
+
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+
+    <script>
+        
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {  // edit: png 600 x 442 
+            let i;
+            const slides = document.getElementsByClassName("mySlides");
+            const dots = document.getElementsByClassName("dot");
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(() => {
+                slides[slideIndex - 1].classList.add("fade");
+            }, 100);
+
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 5000); 
+        }
+
+    </script>
 
     <nav>
         <ul>

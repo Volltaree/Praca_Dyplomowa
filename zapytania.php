@@ -1,27 +1,22 @@
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "admin";
-$dbname = "diet";
+/* w późniejszym etapie */
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+<?php
+$conn = new mysqli("localhost", "root", "admin", "diet");
 
 if ($conn->connect_error) {
-    die("Nieudane połączenie: " . $conn->connect_error);
+    die("Błąd połączenia z bazą danych: " . $conn->connect_error);
 }
 
-
-$sql = "SELECT * FROM Warzywa";
+$sql = "SELECT nazwa, kalorie, bialko, weglowodany, tluszcze FROM warzywa";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    $rows = array();
-    while ($row = $result->fetch_assoc()) {
-        $rows[] = $row;
-    }
-    echo json_encode($rows);
+    $warzywa = $result->fetch_all(MYSQLI_ASSOC);
+    echo json_encode($warzywa);
 } else {
-    echo "Brak danych w bazie.";
+    echo json_encode([]);
 }
+
 $conn->close();
 ?>
+

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dobierz dietę</title>
+    <title>Baza Danych</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,26 +23,54 @@
 
     <h1>Baza Danych</h1>
 
-    <button class="return-button" onclick="goToIndex()">Strona główna</button>
-
-    <div id="listaWarzyw"></div>
+    <h1>Wartości Odżywcze</h1>
+    <div class="table-container">
+        <table id="listaWarzyw">
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Kalorie</th>
+                    <th>Białko</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
     <script>
-        fetch('http://localhost:3000/pobierzWarzywa')
-          .then(response => response.json())
-          .then(data => {
-            const listaWarzyw = document.getElementById('listaWarzyw');
-            data.forEach(warzywo => {
-              const listItem = document.createElement('div');
-              listItem.textContent = `${warzywo.nazwa} - Kalorie: ${warzywo.kalorie} - Białko: ${warzywo.bialko}`;
-              listaWarzyw.appendChild(listItem);
-            });
-          })
-          .catch(error => console.error('Błąd pobierania danych:', error));
-      </script>
-      
+        function goToIndex() {
+            window.location.href = "index.html";
+        }
 
-    <h1>Przepisy</h1>
+        fetch('http://localhost:3000/pobierzWarzywa')
+            .then(response => response.json())
+            .then(data => {
+                const listaWarzyw = document.querySelector('#listaWarzyw tbody');
+                data.forEach(warzywo => {
+                    const row = document.createElement('tr');
+
+                    const cellNazwa = document.createElement('td');
+                    const cellKalorie = document.createElement('td');
+                    const cellBialko = document.createElement('td');
+
+                    cellNazwa.textContent = warzywo.nazwa;
+                    cellKalorie.textContent = warzywo.kalorie;
+                    cellBialko.textContent = warzywo.bialko;
+
+                    row.appendChild(cellNazwa);
+                    row.appendChild(cellKalorie);
+                    row.appendChild(cellBialko);
+
+                    listaWarzyw.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Błąd pobierania danych:', error));
+
+    </script>
+    <button class="return-button" onclick="goToIndex()">Strona główna</button>
+
+
 
 </body>
 

@@ -106,3 +106,33 @@ button:hover {
 .active {
     background-color: #717171;
 }
+
+/* Styl dla tabeli w "Przepisach" ///////////////////////////*/
+
+.table-container {
+    width: 80%;
+    margin: 20px auto; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+#listaWarzyw {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#listaWarzyw th {
+    background-color: pink;
+    color: white;
+    padding: 10px;
+}
+
+#listaWarzyw td {
+    border: 1px solid pink;
+    padding: 8px;
+}
+
+#listaWarzyw tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}

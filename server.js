@@ -1,8 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
+//const path = require('path');
 
 const app = express();
 const port = 3000;
+
 
 app.use(express.static('C:/Users/kasia/Desktop/Strona Diety/STRONA_Internetowa/Praca_Dyplomowa'));
 
@@ -17,6 +19,7 @@ connection.connect(error => {
   if (error) throw error;
   console.log('Pomyślnie połączono z bazą danych MySQL');
 });
+
 
 app.get('/pobierzWarzywa', (req, res) => {
   connection.query('SELECT * FROM Warzywa', (error, results) => {

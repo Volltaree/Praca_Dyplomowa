@@ -28,22 +28,19 @@
     <div id="listaWarzyw"></div>
 
     <script>
-        function goToIndex() {
-            window.location.href = "index.html";
-        }
-
-        fetch('zapytania.php')
-            .then(response => response.json())
-            .then(data => {
-                const listaWarzyw = document.getElementById('listaWarzyw');
-                data.forEach(warzywo => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = `${warzywo.nazwa} - Kalorie: ${warzywo.kalorie} - Białko: ${warzywo.bialko}`;
-                    listaWarzyw.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error('Błąd pobierania danych:', error));
-    </script>
+        fetch('http://localhost:3000/pobierzWarzywa')
+          .then(response => response.json())
+          .then(data => {
+            const listaWarzyw = document.getElementById('listaWarzyw');
+            data.forEach(warzywo => {
+              const listItem = document.createElement('div');
+              listItem.textContent = `${warzywo.nazwa} - Kalorie: ${warzywo.kalorie} - Białko: ${warzywo.bialko}`;
+              listaWarzyw.appendChild(listItem);
+            });
+          })
+          .catch(error => console.error('Błąd pobierania danych:', error));
+      </script>
+      
 
     <h1>Przepisy</h1>
 

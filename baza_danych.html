@@ -28,9 +28,11 @@
         <table id="listaWarzyw">
             <thead>
                 <tr>
-                    <th>Nazwa</th>
-                    <th>Kalorie</th>
-                    <th>Białko</th>
+                    <th onclick="sortTableByColumn('nazwa')">Nazwa</th>
+                    <th onclick="sortTableByColumn('kalorie')">Kalorie</th>
+                    <th onclick="sortTableByColumn('bialko')">Białko</th>
+                    <th onclick="sortTableByColumn('weglowodany')">Węglowodany</th>
+                    <th onclick="sortTableByColumn('tluszcze')">Tłuszcze</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,27 +45,40 @@
             window.location.href = "index.html";
         }
 
+        let data = [];
+
+        function sortTableByColumn(column) {
+            data.sort((a, b) => {
+                if (typeof a[column] === 'string') {
+                    return a[column].localeCompare(b[column]);
+                } else {
+                    return a[column] - b[column];
+                }
+            });
+            refreshTable();
+        }
+
+        function refreshTable() {
+            const listaWarzyw = document.querySelector('#listaWarzyw tbody');
+            listaWarzyw.innerHTML = '';
+            data.forEach(warzywo => {
+                const row = document.createElement('tr');
+                for (const key in warzywo) {
+                    if (key !== 'id') {
+                        const cell = document.createElement('td');
+                        cell.textContent = warzywo[key];
+                        row.appendChild(cell);
+                    }
+                }
+                listaWarzyw.appendChild(row);
+            });
+        }
+
         fetch('http://localhost:3000/pobierzWarzywa')
             .then(response => response.json())
-            .then(data => {
-                const listaWarzyw = document.querySelector('#listaWarzyw tbody');
-                data.forEach(warzywo => {
-                    const row = document.createElement('tr');
-
-                    const cellNazwa = document.createElement('td');
-                    const cellKalorie = document.createElement('td');
-                    const cellBialko = document.createElement('td');
-
-                    cellNazwa.textContent = warzywo.nazwa;
-                    cellKalorie.textContent = warzywo.kalorie;
-                    cellBialko.textContent = warzywo.bialko;
-
-                    row.appendChild(cellNazwa);
-                    row.appendChild(cellKalorie);
-                    row.appendChild(cellBialko);
-
-                    listaWarzyw.appendChild(row);
-                });
+            .then(dataFromAPI => {
+                data = dataFromAPI;
+                refreshTable();
             })
             .catch(error => console.error('Błąd pobierania danych:', error));
 

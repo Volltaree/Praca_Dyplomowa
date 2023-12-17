@@ -3,7 +3,17 @@
 
 <head>
     <title>Asystent dietetyczny</title>
-    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        window.onload = function() {
+            const isGuest = sessionStorage.getItem('guest');
+            if (isGuest) {
+                const generatePlanButton = document.getElementById('generatePlan');
+                generatePlanButton.style.display = 'none';
+            }
+        };
+    </script> 
+
 </head>
 
 <body>
@@ -57,13 +67,19 @@
             setTimeout(showSlides, 5000); 
         }
 
-        
+        window.onload = function() {
+            const visited = sessionStorage.getItem('visited');
+            if (!visited) {
+                window.location.href = 'start.html'; 
+            }
+        };
 
+        
     </script>
 
     <nav>
         <ul>
-            <li><a href="kalkulator_bmi.html">Wygeneruj plan</a></li>
+            <li><a id="generatePlan" href="kalkulator_bmi.html">Wygeneruj plan</a></li>
             <li><a href="baza_danych.html">Baza danych</a></li>
         </ul>
     </nav>

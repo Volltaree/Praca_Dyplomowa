@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Powitalny ekran</title>
+    <style>
+        
+        body {
+            background-color: #f4d8dc;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            display:flex;
+            padding: 20px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .content-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-container">
+        <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 24px;">Witaj!</h2>
+        <button style="font-family: 'Times New Roman', Times, serif; font-size: 20px;" onClick="continueAsLogged()">Zaloguj się</button>
+        <button style="font-family: 'Times New Roman', Times, serif; font-size: 20px;" onclick="continueAsGuest()">Kontynuuj jako gość</button>
+    </div>
+
+    <script>
+
+        function continueAsLogged(){
+            sessionStorage.setItem('visited', 'true'); // Ustawienie zmiennej sesji
+            window.location.href = 'index.html';
+        }
+        function continueAsGuest() {
+            sessionStorage.setItem('visited', 'true'); // Ustawienie zmiennej sesji
+            window.location.href = 'baza_danych.html'; // Przekierowanie 
+        }
+    </script>
+</body>
+
+</html>

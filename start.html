@@ -4,14 +4,13 @@
 <head>
     <title>Powitalny ekran</title>
     <style>
-        
         body {
             background-color: #f4d8dc;
             text-align: center;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            display:flex;
+            display: flex;
             padding: 20px;
             font-family: 'Times New Roman', Times, serif;
         }
@@ -38,14 +37,16 @@
 
 <body>
     <div class="content-container">
-        <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 24px;">Witaj!</h2>
-        <button style="font-family: 'Times New Roman', Times, serif; font-size: 20px;" onClick="continueAsLogged()">Zaloguj się</button>
-        <button style="font-family: 'Times New Roman', Times, serif; font-size: 20px;" onclick="continueAsGuest()">Kontynuuj jako gość</button>
+        <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 30px;">Witaj!</h2>
+        <button style="font-family: 'Times New Roman', Times, serif; font-size: 20px;"
+            onClick="continueAsLogged()">Zaloguj się</button>
+        <button style="font-family: 'Times New Roman', Times, serif; font-size: 20px;"
+            onclick="continueAsGuest()">Kontynuuj jako gość</button>
     </div>
 
     <script>
 
-        function continueAsLogged(){
+        function continueAsLogged() {
             sessionStorage.setItem('visited', 'true'); // Ustawienie zmiennej sesji
             window.location.href = 'index.html';
         }

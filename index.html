@@ -5,14 +5,14 @@
     <title>Asystent dietetyczny</title>
     <link rel="stylesheet" href="css/style.css">
     <script>
-        window.onload = function() {
+        window.onload = function () {
             const isGuest = sessionStorage.getItem('guest');
             if (isGuest) {
                 const generatePlanButton = document.getElementById('generatePlan');
                 generatePlanButton.style.display = 'none';
             }
         };
-    </script> 
+    </script>
 
 </head>
 
@@ -20,7 +20,8 @@
     <h1 class="headerText">Asystent Dietetyczny</h1>
     <div class="slideshow-container">
         <div class="mySlides fade">
-            <img src="https://i.ibb.co/BcT07z2/kisspng-meal-dinner-breakfast-clip-art-pink-spoons-cliparts-5ab1d314966042-751293671521603348616.png" style="width:40%">
+            <img src="https://i.ibb.co/BcT07z2/kisspng-meal-dinner-breakfast-clip-art-pink-spoons-cliparts-5ab1d314966042-751293671521603348616.png"
+                style="width:40%">
         </div>
 
         <div class="mySlides fade">
@@ -39,7 +40,7 @@
     </div>
 
     <script>
-        
+
         let slideIndex = 0;
         showSlides();
 
@@ -64,17 +65,17 @@
             }, 100);
 
             dots[slideIndex - 1].className += " active";
-            setTimeout(showSlides, 5000); 
+            setTimeout(showSlides, 5000);
         }
 
-        window.onload = function() {
+        window.onload = function () {
             const visited = sessionStorage.getItem('visited');
             if (!visited) {
-                window.location.href = 'start.html'; 
+                window.location.href = 'start.html';
             }
         };
 
-        
+
     </script>
 
     <nav>

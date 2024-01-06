@@ -8,10 +8,21 @@
             font-family: 'Times New Roman', Times, serif;
             text-align: center;
             padding: 20px;
+            background-color: #ffe6e6;
         }
 
         input[type="number"] {
             width: 60px;
+        }
+
+        .calculator {
+            border: 2px solid #ffcccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            /* Kolor tła ramki */
+            display: inline-block;
+            /* Pozycjonowanie na środku */
         }
 
         button {
@@ -52,12 +63,21 @@
             background-color: #ffd9e6;
         }
 
-        .calculator {
-                border: 2px solid #ffcccc;
-                padding: 20px;
-                border-radius: 8px;
+        .return-button {
+            margin-top: 20px;
+            background-color: #ccc;
+            transition: background-color 0.3s;
         }
-        
+
+        .return-button:hover {
+            background-color: #ffd9e6;
+        }
+
+        #kalorycznosc {
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 
@@ -72,15 +92,42 @@
         <label for="height">Wzrost (cm):</label>
         <input type="number" id="height" placeholder="Wzrost"><br><br>
 
-        <button onclick="calculateBMI()">Oblicz BMI</button>
+        <label for="age">Wiek:</label>
+        <input type="number" id="age" placeholder="Wiek"><br><br>
+
+        <label for="gender">Płeć:</label>
+        <select id="gender">
+            <option value="male">Mężczyzna</option>
+            <option value="female">Kobieta</option>
+        </select><br><br>
+
+        <label for="activity">Aktywność fizyczna:</label>
+        <select id="activity">
+            <option value="1.2">Niski poziom aktywności (brak ćwiczeń)</option>
+            <option value="1.375">Ćwiczenia 1-3 razy w tygodniu</option>
+            <option value="1.55">Ćwiczenia 3-5 razy w tygodniu</option>
+            <option value="1.725">Ćwiczenia 6-7 razy w tygodniu</option>
+            <option value="1.9">Aktywność bardzo wysoka (ćwiczenia i praca fizyczna)</option>
+        </select><br><br>
+
+
+        <button onclick="calculate()">Oblicz BMI i zapotrzebowanie kaloryczne</button>
 
         <div id="result"></div>
+        <div id="kalorycznosc"></div>
 
         <button id="diet-button" onclick="goToDietPage()">Dobierz dietę</button>
 
         <button class="return-button" onclick="goToIndex()">Strona główna</button>
 
         <script>
+
+            function calculate() {
+                calculateBMI();
+                calculateKalorycznosc();
+            }
+
+            var calculatedBMI = 0; // zmienna globalna do przechowania BMI,wykorzystac do diet
             function calculateBMI() {
                 var weight = parseFloat(document.getElementById('weight').value);
                 var height = parseFloat(document.getElementById('height').value) / 100;
@@ -89,6 +136,32 @@
                 resultElement.innerHTML = "Twoje BMI wynosi: " + bmi.toFixed(2);
                 var dietButton = document.getElementById('diet-button');
                 dietButton.style.display = "block";
+                calculatedBMI = bmi;
+            }
+
+            function calculateKalorycznosc() {
+                var weight = parseFloat(document.getElementById('weight').value);
+                var height = parseFloat(document.getElementById('height').value) / 100;
+                var age = parseInt(document.getElementById('age').value);
+                var gender = document.getElementById('gender').value;
+                var activity = parseFloat(document.getElementById('activity').value);
+
+                var bmr;
+                if (gender === 'male') {
+                    bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+                } else {
+                    bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+                }
+
+                var kalorycznosc = bmr * activity;
+
+                var minimalnaKalorycznosc = 1400;
+                if (kalorycznosc < minimalnaKalorycznosc) {
+                kalorycznosc = minimalnaKalorycznosc;
+        }
+                var kalorycznoscElement = document.getElementById('kalorycznosc');
+                kalorycznoscElement.style.display = 'block';
+                kalorycznoscElement.innerHTML = "Szacunkowo powinieneś/powinnaś spożywać około " + Math.round(kalorycznosc) + " kcal dziennie.";
             }
 
             function goToIndex() {
@@ -98,6 +171,8 @@
             function goToDietPage() {
                 window.location.href = "diet.html";
             }
+
+
 
         </script>
     </div>

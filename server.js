@@ -28,6 +28,16 @@ app.get('/pobierzWarzywa', (req, res) => {
   });
 });
 
+app.get('/pobierzDiete', (req, res) => {
+  const bmi = parseFloat(req.query.bmi);
+
+  connection.query('SELECT nazwa, opis FROM Diety WHERE przedzial_od <= ? AND przedzial_do > ?', [bmi, bmi], (error, results) => {
+      if (error) throw error;
+      res.json(results);
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Serwer uruchomiony na porcie ${port}`);
 });

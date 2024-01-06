@@ -20,9 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             background-color: white;
-            /* Kolor tła ramki */
             display: inline-block;
-            /* Pozycjonowanie na środku */
         }
 
         button {
@@ -113,6 +111,7 @@
 
         <button onclick="calculate()">Oblicz BMI i zapotrzebowanie kaloryczne</button>
 
+        <div id="weight-category"></div>
         <div id="result"></div>
         <div id="kalorycznosc"></div>
 
@@ -121,47 +120,50 @@
         <button class="return-button" onclick="goToIndex()">Strona główna</button>
 
         <script>
+            var resultElement = document.getElementById('result');
 
             function calculate() {
-                calculateBMI();
-                calculateKalorycznosc();
-            }
-
-            var calculatedBMI = 0; // zmienna globalna do przechowania BMI,wykorzystac do diet
-            function calculateBMI() {
-                var weight = parseFloat(document.getElementById('weight').value);
-                var height = parseFloat(document.getElementById('height').value) / 100;
-                var bmi = weight / (height * height);
-                var resultElement = document.getElementById('result');
-                resultElement.innerHTML = "Twoje BMI wynosi: " + bmi.toFixed(2);
-                var dietButton = document.getElementById('diet-button');
-                dietButton.style.display = "block";
-                calculatedBMI = bmi;
-            }
-
-            function calculateKalorycznosc() {
                 var weight = parseFloat(document.getElementById('weight').value);
                 var height = parseFloat(document.getElementById('height').value) / 100;
                 var age = parseInt(document.getElementById('age').value);
                 var gender = document.getElementById('gender').value;
                 var activity = parseFloat(document.getElementById('activity').value);
 
-                var bmr;
+                var bmi = weight / (height * height);
+                var kalorycznosc;
+                var weightCategory = '';
+
                 if (gender === 'male') {
-                    bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+                    var bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
                 } else {
-                    bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+                    var bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
                 }
 
-                var kalorycznosc = bmr * activity;
+                kalorycznosc = bmr * activity;
 
                 var minimalnaKalorycznosc = 1400;
                 if (kalorycznosc < minimalnaKalorycznosc) {
-                kalorycznosc = minimalnaKalorycznosc;
-        }
+                    kalorycznosc = minimalnaKalorycznosc;
+                }
+
+                if (bmi < 18.5) {
+                    weightCategory = "Niedowaga";
+                } else if (bmi >= 18.5 && bmi <= 24.9) {
+                    weightCategory = "Waga prawidłowa";
+                } else {
+                    weightCategory = "Nadwaga";
+                }
+
+                var resultElement = document.getElementById('result');
                 var kalorycznoscElement = document.getElementById('kalorycznosc');
+                resultElement.style.display = 'block';
                 kalorycznoscElement.style.display = 'block';
+
+                resultElement.innerHTML = "Twoje BMI wynosi: " + bmi.toFixed(2) + "<br>Wynik: " + weightCategory;
                 kalorycznoscElement.innerHTML = "Szacunkowo powinieneś/powinnaś spożywać około " + Math.round(kalorycznosc) + " kcal dziennie.";
+
+                var dietButton = document.getElementById('diet-button');
+                dietButton.style.display = "block";
             }
 
             function goToIndex() {
@@ -171,12 +173,8 @@
             function goToDietPage() {
                 window.location.href = "diet.html";
             }
-
-
-
         </script>
     </div>
-
 </body>
 
 </html>

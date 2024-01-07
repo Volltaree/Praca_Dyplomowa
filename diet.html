@@ -20,6 +20,13 @@
         .bold-and-large {
             font-size: 28px;
             font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .smaller-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
         }
 
         .result {
@@ -32,10 +39,9 @@
 
 <body>
     <div class="info">
-        <!-- Dodane klasy do elementów zmieniające wygląd tekstu -->
         <div class="result bold-and-large" id="bmiValue"></div>
         <div class="result" id="weightCategoryValue"></div>
-        <div class="result" id="kalorieValue"></div>
+        <div class="result smaller-text" id="kalorieValue"></div>
     </div>
 
     <button onclick="goToIndex()">Strona główna</button>

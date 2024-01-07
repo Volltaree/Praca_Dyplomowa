@@ -125,7 +125,7 @@
             const kalorie = urlParams.get('kalorie') || '';
 
             const bmiAndKalorieValue = document.getElementById('bmiAndKalorieValue');
-            bmiAndKalorieValue.innerHTML = "<span class='bold-and-large'>Twoje BMI wynosi: " + bmi + "</span><br><span class='smaller-text'>Szacunkowo powinieneś/powinnaś spożywać około " + kalorie + " kcal dziennie.</span>";
+            bmiAndKalorieValue.innerHTML = `<span class='bold-and-large'>Twoje BMI wynosi: ${bmi}</span><br><span class='smaller-text'>Szacunkowo powinieneś/powinnaś spożywać około ${kalorie} kcal dziennie.</span>`;
 
             fetch('/pobierzPosilki')
                 .then(response => response.json())
@@ -135,24 +135,29 @@
 
                     let weganskaKalorie = 0;
                     let nieweganskaKalorie = 0;
-                    data.forEach(posilek => {
-                        const mealType = getMealLabel(posilek.kategoria);
+                    const shuffledData = data.sort(() => Math.random() - 0.5); 
 
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${mealType}: ${posilek.nazwa} (${posilek.kalorie} kcal)`;
+                    const sniadanieWegan = shuffledData.filter(posilek => posilek.kategoria === 'sniadanie' && posilek.typ === 'weganski');
+                    const obiadWegan = shuffledData.filter(posilek => posilek.kategoria === 'obiad' && posilek.typ === 'weganski');
+                    const kolacjaWegan = shuffledData.filter(posilek => posilek.kategoria === 'kolacja' && posilek.typ === 'weganski');
 
-                        if (posilek.typ === 'weganski') {
-                            if (weganskaKalorie < kalorie / 1) {
-                                weganieList.appendChild(listItem);
-                                weganskaKalorie += posilek.kalorie;
-                            }
-                        } else {
-                            if (nieweganskaKalorie < kalorie / 1) {
-                                nieweganieList.appendChild(listItem);
-                                nieweganskaKalorie += posilek.kalorie;
-                            }
-                        }
-                    });
+                    const sniadanieNiewegan = shuffledData.filter(posilek => posilek.kategoria === 'sniadanie' && posilek.typ !== 'weganski');
+                    const obiadNiewegan = shuffledData.filter(posilek => posilek.kategoria === 'obiad' && posilek.typ !== 'weganski');
+                    const kolacjaNiewegan = shuffledData.filter(posilek => posilek.kategoria === 'kolacja' && posilek.typ !== 'weganski');
+
+                    const selectRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+                    weganieList.innerHTML += `
+                        <li>${getMealLabel('sniadanie')}: ${selectRandom(sniadanieWegan).nazwa} (${selectRandom(sniadanieWegan).kalorie} kcal)</li>
+                        <li>${getMealLabel('obiad')}: ${selectRandom(obiadWegan).nazwa} (${selectRandom(obiadWegan).kalorie} kcal)</li>
+                        <li>${getMealLabel('kolacja')}: ${selectRandom(kolacjaWegan).nazwa} (${selectRandom(kolacjaWegan).kalorie} kcal)</li>
+                    `;
+
+                    nieweganieList.innerHTML += `
+                        <li>${getMealLabel('sniadanie')}: ${selectRandom(sniadanieNiewegan).nazwa} (${selectRandom(sniadanieNiewegan).kalorie} kcal)</li>
+                        <li>${getMealLabel('obiad')}: ${selectRandom(obiadNiewegan).nazwa} (${selectRandom(obiadNiewegan).kalorie} kcal)</li>
+                        <li>${getMealLabel('kolacja')}: ${selectRandom(kolacjaNiewegan).nazwa} (${selectRandom(kolacjaNiewegan).kalorie} kcal)</li>
+                    `;
                 })
                 .catch(error => console.error('Błąd pobierania danych:', error));
         }

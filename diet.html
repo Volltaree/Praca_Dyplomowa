@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Dobierz dietę</title>
@@ -11,60 +10,67 @@
             text-align: center;
             padding: 20px;
         }
-
+        
         .info {
             font-size: 18px;
             margin-bottom: 20px;
         }
-
+        
         .bold-and-large {
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 8px;
         }
-
+        
         .smaller-text {
             font-size: 18px;
             color: #333;
             margin-bottom: 5px;
         }
-
+        
         .result {
             font-size: 24px;
             color: #333;
             margin-bottom: 5px;
         }
+        
+        #kalorieValue {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .frame {
+            background-color: white;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
     </style>
 </head>
-
 <body>
     <div class="info">
-        <div class="result bold-and-large" id="bmiValue"></div>
-        <div class="result" id="weightCategoryValue"></div>
-        <div class="result smaller-text" id="kalorieValue"></div>
+        <div class="frame">
+            <div class="result bold-and-large" id="bmiAndKalorieValue"></div>
+        </div>
     </div>
-
+    
     <button onclick="goToIndex()">Strona główna</button>
-
+    
     <script>
         function goToIndex() {
             window.location.href = "index.html";
         }
-
+        
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const bmi = urlParams.get('bmi') || '';
             const kalorie = urlParams.get('kalorie') || '';
-
-            const bmiValue = document.getElementById('bmiValue');
-            const kalorieValue = document.getElementById('kalorieValue');
-            const weightCategoryValue = document.getElementById('weightCategoryValue');
-
-            bmiValue.innerText = bmi.split('\n')[0];
-            weightCategoryValue.innerText = bmi.split('\n')[1];
-            kalorieValue.innerText = kalorie;
+            const bmiAndKalorieValue = document.getElementById('bmiAndKalorieValue');
+            bmiAndKalorieValue.innerHTML = "<span class='bold-and-large'>Twoje BMI wynosi: " + bmi + "</span><br><span class='smaller-text'>Szacunkowo powinieneś/powinnaś spożywać około " + kalorie + " kcal dziennie.</span>";
         }
     </script>
 </body>
-
 </html>

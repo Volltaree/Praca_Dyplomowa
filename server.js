@@ -36,6 +36,27 @@ app.get('/pobierzDiete', (req, res) => {
       res.json(results);
   });
 });
+//////////////////////////////////////////////////////////
+
+app.get('/pobierzPosilki', (req, res) => {
+  connection.query('SELECT * FROM Posilki', (error, results) => {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+
+app.get('/losowePosilki', (req, res) => {
+  const kalorie = parseFloat(req.query.kalorie);
+  const weganska = req.query.weganska;
+
+  connection.query('SELECT nazwa, typ, kalorie FROM Posilki WHERE kalorie <= ? AND weganska = ? ORDER BY RAND() LIMIT 3', [kalorie + 50, weganska], (error, results) => {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+///////////////////////
 
 
 app.listen(port, () => {

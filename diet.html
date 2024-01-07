@@ -127,22 +127,30 @@
             const bmiAndKalorieValue = document.getElementById('bmiAndKalorieValue');
             bmiAndKalorieValue.innerHTML = "<span class='bold-and-large'>Twoje BMI wynosi: " + bmi + "</span><br><span class='smaller-text'>Szacunkowo powinieneś/powinnaś spożywać około " + kalorie + " kcal dziennie.</span>";
 
-
             fetch('/pobierzPosilki')
                 .then(response => response.json())
                 .then(data => {
                     const weganieList = document.getElementById('weganieList');
                     const nieweganieList = document.getElementById('nieweganieList');
+
+                    let weganskaKalorie = 0;
+                    let nieweganskaKalorie = 0;
                     data.forEach(posilek => {
                         const mealType = getMealLabel(posilek.kategoria);
 
                         const listItem = document.createElement('li');
-                        listItem.textContent = `${mealType}: ${posilek.nazwa} (${posilek.kalorie} kcal)`; 
+                        listItem.textContent = `${mealType}: ${posilek.nazwa} (${posilek.kalorie} kcal)`;
 
                         if (posilek.typ === 'weganski') {
-                            weganieList.appendChild(listItem);
+                            if (weganskaKalorie < kalorie / 1) {
+                                weganieList.appendChild(listItem);
+                                weganskaKalorie += posilek.kalorie;
+                            }
                         } else {
-                            nieweganieList.appendChild(listItem);
+                            if (nieweganskaKalorie < kalorie / 1) {
+                                nieweganieList.appendChild(listItem);
+                                nieweganskaKalorie += posilek.kalorie;
+                            }
                         }
                     });
                 })

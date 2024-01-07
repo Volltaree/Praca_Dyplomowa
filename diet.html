@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Dobierz dietę</title>
-    <link rel="stylesheet" href="css/style.css">
     <style>
         body {
             background-color: #ffe6e6;
@@ -13,25 +12,53 @@
             padding: 20px;
         }
 
-        h1 {
+        .info {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .bold-and-large {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .result {
+            font-size: 24px;
             color: #333;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 
 <body>
-    <h1>Wybierz swoją dietę</h1>
-    <!-- Baza danych Soon-->
-    <button class="return-button" onclick="goToIndex()">Strona główna</button>
+    <div class="info">
+        <!-- Dodane klasy do elementów zmieniające wygląd tekstu -->
+        <div class="result bold-and-large" id="bmiValue"></div>
+        <div class="result" id="weightCategoryValue"></div>
+        <div class="result" id="kalorieValue"></div>
+    </div>
+
+    <button onclick="goToIndex()">Strona główna</button>
 
     <script>
-
         function goToIndex() {
             window.location.href = "index.html";
         }
 
-    </script>
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const bmi = urlParams.get('bmi') || '';
+            const kalorie = urlParams.get('kalorie') || '';
 
+            const bmiValue = document.getElementById('bmiValue');
+            const kalorieValue = document.getElementById('kalorieValue');
+            const weightCategoryValue = document.getElementById('weightCategoryValue');
+
+            bmiValue.innerText = bmi.split('\n')[0];
+            weightCategoryValue.innerText = bmi.split('\n')[1];
+            kalorieValue.innerText = kalorie;
+        }
+    </script>
 </body>
 
 </html>

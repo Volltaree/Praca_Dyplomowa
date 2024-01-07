@@ -75,6 +75,14 @@
             font-weight: bold;
             margin-top: 20px;
             display: none;
+
+        }
+
+        .bmi-text {
+            font-size: 24px;
+            /* Rozmiar czcionki dla tekstu BMI */
+            font-weight: bold;
+            /* Grubsza czcionka dla tekstu BMI */
         }
     </style>
 </head>
@@ -159,8 +167,8 @@
                 resultElement.style.display = 'block';
                 kalorycznoscElement.style.display = 'block';
 
-                resultElement.innerHTML = "Twoje BMI wynosi: " + bmi.toFixed(2) + "<br>Wynik: " + weightCategory;
-                kalorycznoscElement.innerHTML = "Szacunkowo powinieneś/powinnaś spożywać około " + Math.round(kalorycznosc) + " kcal dziennie.";
+                resultElement.innerHTML = "<span style='font-size: 24px; font-weight: bold;'>Twoje BMI wynosi: " + bmi.toFixed(2) + "</span><br>Wynik: " + weightCategory + "";
+                kalorycznoscElement.innerHTML = "Szacunkowo powinieneś/powinnaś spożywać około " + Math.round(kalorycznosc) + " kcal dziennie.</p>";
 
                 var dietButton = document.getElementById('diet-button');
                 dietButton.style.display = "block";
@@ -171,8 +179,13 @@
             }
 
             function goToDietPage() {
-                window.location.href = "diet.html";
-            }
+    var bmi = document.getElementById('result').innerText.replace("Twoje BMI wynosi: ", "");
+    var kalorie = document.getElementById('kalorycznosc').innerText.replace("Szacunkowo powinieneś/powinnaś spożywać około ", "").replace(" kcal dziennie.", "");
+    var url = "diet.html?bmi=" + encodeURIComponent(bmi) + "&kalorie=" + encodeURIComponent(kalorie);
+    window.location.href = url;
+}
+
+
         </script>
     </div>
 </body>

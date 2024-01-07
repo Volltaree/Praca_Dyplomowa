@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Kalkulator BMI</title>
     <style>
@@ -9,11 +10,11 @@
             padding: 20px;
             background-color: #ffe6e6;
         }
-        
+
         input[type="number"] {
             width: 60px;
         }
-        
+
         .calculator {
             border: 2px solid #ffcccc;
             padding: 20px;
@@ -21,7 +22,7 @@
             background-color: white;
             display: inline-block;
         }
-        
+
         button {
             padding: 8px 16px;
             margin-top: 10px;
@@ -34,16 +35,16 @@
             font-size: 16px;
             transition: background-color 0.3s;
         }
-        
+
         button:hover {
             background-color: #ffe6e6;
         }
-        
+
         #result {
             font-weight: bold;
             margin-top: 20px;
         }
-        
+
         #diet-button {
             display: none;
             margin-top: 20px;
@@ -52,33 +53,34 @@
             margin: 10px auto;
             transition: background-color 0.3s;
         }
-        
+
         #diet-button:hover {
             background-color: #ffd9e6;
         }
-        
+
         .return-button {
             margin-top: 20px;
             background-color: #ccc;
             transition: background-color 0.3s;
         }
-        
+
         .return-button:hover {
             background-color: #ffd9e6;
         }
-        
+
         #kalorycznosc {
             font-weight: bold;
             margin-top: 20px;
             display: none;
         }
-        
+
         .bmi-text {
             font-size: 24px;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <div class="calculator">
         <h1>Kalkulator BMI</h1>
@@ -110,31 +112,31 @@
     </div>
     <script>
         var resultElement = document.getElementById('result');
-        
+
         function calculate() {
             var weight = parseFloat(document.getElementById('weight').value);
             var height = parseFloat(document.getElementById('height').value) / 100;
             var age = parseInt(document.getElementById('age').value);
             var gender = document.getElementById('gender').value;
             var activity = parseFloat(document.getElementById('activity').value);
-            
+
             var bmi = weight / (height * height);
             var kalorycznosc;
             var weightCategory = '';
-            
+
             if (gender === 'male') {
                 var bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
             } else {
                 var bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
             }
-            
+
             kalorycznosc = bmr * activity;
-            
+
             var minimalnaKalorycznosc = 1400;
             if (kalorycznosc < minimalnaKalorycznosc) {
                 kalorycznosc = minimalnaKalorycznosc;
             }
-            
+
             if (bmi < 18.5) {
                 weightCategory = "Niedowaga";
             } else if (bmi >= 18.5 && bmi <= 24.9) {
@@ -142,23 +144,23 @@
             } else {
                 weightCategory = "Nadwaga";
             }
-            
+
             var resultElement = document.getElementById('result');
             var kalorycznoscElement = document.getElementById('kalorycznosc');
             resultElement.style.display = 'block';
             kalorycznoscElement.style.display = 'block';
-            
+
             resultElement.innerHTML = "<span style='font-size: 24px; font-weight: bold;'>Twoje BMI wynosi: " + bmi.toFixed(2) + "</span><br>Wynik: " + weightCategory + "";
             kalorycznoscElement.innerHTML = "Szacunkowo powinieneś/powinnaś spożywać około " + Math.round(kalorycznosc) + " kcal dziennie.</p>";
-            
+
             var dietButton = document.getElementById('diet-button');
             dietButton.style.display = "block";
         }
-        
+
         function goToIndex() {
             window.location.href = "index.html";
         }
-        
+
         function goToDietPage() {
             var bmi = document.getElementById('result').innerText.replace("Twoje BMI wynosi: ", "");
             var kalorie = document.getElementById('kalorycznosc').innerText.replace("Szacunkowo powinieneś/powinnaś spożywać około ", "").replace(" kcal dziennie.", "");
@@ -167,4 +169,5 @@
         }
     </script>
 </body>
+
 </html>

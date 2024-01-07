@@ -135,8 +135,9 @@
                     const nieweganieList = document.getElementById('nieweganieList');
                     data.forEach(posilek => {
                         const mealType = getMealLabel(posilek.kategoria);
+
                         const listItem = document.createElement('li');
-                        listItem.textContent = `${mealType}: ${posilek.nazwa}`;
+                        listItem.textContent = `${mealType}: ${posilek.nazwa} (${posilek.kalorie} kcal)`; 
 
                         if (posilek.typ === 'weganski') {
                             weganieList.appendChild(listItem);
@@ -150,4 +151,5 @@
 
     </script>
 </body>
+
 </html>
